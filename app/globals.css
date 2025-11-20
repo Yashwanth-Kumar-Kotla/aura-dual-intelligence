@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8f0f8 25%, #f0f4ff 50%, #faf5ff 75%, #fff5f5 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  z-index: -2;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Floating animated orbs */
+body::after {
+  content: '';
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(147, 51, 234, 0.1) 50%, transparent 70%);
+  filter: blur(60px);
+  top: -200px;
+  right: -200px;
+  animation: float 20s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-100px, 100px) scale(1.1);
+  }
+  66% {
+    transform: translate(100px, -100px) scale(0.9);
+  }
+}
+
+/* Additional floating orbs */
+@layer components {
+  .floating-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .orb-blue {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+    top: 20%;
+    left: -150px;
+    animation: float2 25s ease-in-out infinite;
+  }
+
+  .orb-purple {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.25) 0%, transparent 70%);
+    bottom: 15%;
+    right: -100px;
+    animation: float3 30s ease-in-out infinite;
+  }
+
+  .orb-pink {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
+    top: 60%;
+    left: 10%;
+    animation: float4 18s ease-in-out infinite;
+  }
+}
+
+@keyframes float2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(150px, -100px) rotate(180deg);
+  }
+}
+
+@keyframes float3 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-100px, 150px) rotate(-180deg);
+  }
+}
+
+@keyframes float4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(80px, -80px) scale(1.2);
+  }
+}
