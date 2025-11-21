@@ -1,4 +1,4 @@
-// File: /Users/yashwanthkumar/Downloads/Aura_Duo_Dual_AI_Integration/app/layout.js
+// File: /Users/yashwanthkumar/Downloads/aura-dual-intelligence/app/layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
