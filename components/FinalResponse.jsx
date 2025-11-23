@@ -2,9 +2,21 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle2, Sparkles } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 export function FinalResponse({ response }) {
   if (!response) return null;
+
+  // Clean up excessive markdown headings but keep the content
+  const cleanedResponse = response
+    .split("\n\n")
+    .map((paragraph) => {
+      // Remove leading markdown headings like "#", "##", etc. but keep the text
+      let cleaned = paragraph.replace(/^#{1,6}\s*/g, "").trim();
+      return cleaned;
+    })
+    .filter(Boolean)
+    .join("\n\n");
 
   return (
     <motion.div
@@ -35,18 +47,74 @@ export function FinalResponse({ response }) {
           </div>
         </div>
 
-        <div className="space-y-3 text-sm md:text-base">
-          {response.split("\n\n").map((paragraph, index) => (
-            <motion.p
-              key={index}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="text-slate-800"
-            >
-              {paragraph}
-            </motion.p>
-          ))}
+        <div className="prose prose-sm md:prose-base max-w-none text-slate-800 leading-relaxed">
+          <ReactMarkdown
+            components={{
+              // Custom styling for markdown elements
+              p: ({ children }) => (
+                <p className="mb-3 text-slate-800">
+                  {children}
+                </p>
+              ),
+              strong: ({ children }) => (
+                <strong className="font-semibold text-slate-900">{children}</strong>
+              ),
+              em: ({ children }) => (
+                <em className="italic text-slate-700">{children}</em>
+              ),
+              ul: ({ children }) => (
+                <ul className="list-disc list-inside mb-3 space-y-1 ml-4 text-slate-800">
+                  {children}
+                </ul>
+              ),
+              ol: ({ children }) => (
+                <ol className="list-decimal list-inside mb-3 space-y-1 ml-4 text-slate-800">
+                  {children}
+                </ol>
+              ),
+              li: ({ children }) => (
+                <li className="text-slate-800">{children}</li>
+              ),
+              h1: ({ children }) => (
+                <h1 className="text-xl font-bold text-slate-900 mb-3 mt-4 first:mt-0">
+                  {children}
+                </h1>
+              ),
+              h2: ({ children }) => (
+                <h2 className="text-lg font-semibold text-slate-900 mb-2 mt-4 first:mt-0">
+                  {children}
+                </h2>
+              ),
+              h3: ({ children }) => (
+                <h3 className="text-base font-semibold text-slate-900 mb-2 mt-3 first:mt-0">
+                  {children}
+                </h3>
+              ),
+              code: ({ children, className }) => {
+                const isInline = !className;
+                if (isInline) {
+                  return (
+                    <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-blue-600">
+                      {children}
+                    </code>
+                  );
+                }
+                return (
+                  <code className="block bg-gray-100 p-3 rounded-lg text-sm font-mono text-slate-800 overflow-x-auto mb-3">
+                    {children}
+                  </code>
+                );
+              },
+              blockquote: ({ children }) => (
+                <blockquote className="border-l-4 border-blue-300 pl-4 italic text-slate-700 my-3">
+                  {children}
+                </blockquote>
+              ),
+              hr: () => <hr className="my-4 border-gray-300" />,
+            }}
+          >
+            {cleanedResponse}
+          </ReactMarkdown>
         </div>
 
         <div className="flex justify-center mt-5 pt-5 border-t border-slate-200/70">
