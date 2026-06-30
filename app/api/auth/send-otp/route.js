@@ -3,9 +3,8 @@ import { Resend } from "resend";
 import { createOTP } from "../../../../lib/otp";
 import { getUserByEmail } from "../../../../lib/users";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request) {
+  const resend = new Resend(process.env.RESEND_API_KEY || "placeholder");
   try {
     const body = await request.json();
     const { email, purpose = "login" } = body;
