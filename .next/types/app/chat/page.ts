@@ -1,4 +1,4 @@
-// File: /Users/yashwanthkumar/Downloads/aura-dual-intelligence/app/chat/page.js
+// File: /Users/yash/Desktop/aura-dual-intelligence/app/chat/page.js
 import * as entry from '../../../../app/chat/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

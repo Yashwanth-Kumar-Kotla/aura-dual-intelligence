@@ -21,7 +21,7 @@ export async function POST(req) {
 
     // If user is logged in, try to use their API keys first
     if (session?.user?.email) {
-      const userKeys = getUserApiKeys(session.user.email);
+      const userKeys = await getUserApiKeys(session.user.email);
       if (userKeys.openaiKey) {
         openaiKey = userKeys.openaiKey;
       }
